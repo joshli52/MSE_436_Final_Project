@@ -22,22 +22,21 @@ brew install libomp          # macOS only, required by LightGBM
 # 1. Ingest data and build features (downloads ~120k rows, caches on disk)
 python3 src/build.py
 
-# 2. Train models and generate plots
+# 2. Train models
 python3 src/model.py
 
 # 3. Run the optimizer
 python3 src/cli.py --sources '[{"city":"Chicago, IL","attendees":30},{"city":"Dallas/Fort Worth, TX","attendees":50}]'
-
+```
 All output files land in the project root:
 - `pairs_2025q4.parquet` — 1,000-pair feature table
 - `city_coords.parquet` — 115-city geocode + aggregate table
 - `distance_calibration.json` — OLS coefficients for gc_km → nsmiles
 - `models/` — pickled models, metrics JSON, shipped.json
-- `plots/` — pred vs actual, residual vs distance, residual by city
 
 ---
 
-## Model architecture
+# Model architecture
 
 | Model | Description |
 |-------|-------------|
@@ -51,7 +50,7 @@ its proxy at inference time (R² = 0.44 for the calibration; see Limitations).
 
 ---
 
-## Metrics table
+# Metrics table
 
 All CV results on 2025-Q4 data (1,000 pairs, 115 cities).
 Fares are one-way averages in USD (mean $250, median $242).
@@ -75,11 +74,11 @@ Fares are one-way averages in USD (mean $250, median $242).
 
 ---
 
-## Limitations
+# Limitations
 
 1. **15.3% pair coverage**: The DOT Table 1 covers only the 1,000 busiest
    markets out of 6,555 possible pairs among 115 cities. All other prices are
-   model predictions, not observed data. The optimizer flags each imputed leg.
+   model predictions, not observed data.
 
 2. **Contiguous US only**: The dataset excludes Hawaii, Alaska, Puerto Rico,
    and international routes. The 115 cities are all contiguous-state markets.
