@@ -428,8 +428,8 @@ with tab_map:
                 lon=[COORDS.loc[c, "lon"], b["lon"]],
                 lat=[COORDS.loc[c, "lat"], b["lat"]],
                 mode="lines",
-                line=dict(width=1.5, color=AQUA),
-                opacity=0.55,
+                line=dict(width=2.5, color=BLUE_DARK),
+                opacity=0.8,
                 showlegend=False,
                 hoverinfo="skip",
             )
@@ -438,15 +438,25 @@ with tab_map:
     fig.update_layout(
         geo=dict(
             scope="usa",
-            bgcolor="rgba(0,0,0,0)",
-            landcolor="#e8e6e1",
-            lakecolor="#fcfcfb",
-            subunitcolor="#fcfcfb",
+            bgcolor="#eaf1f8",       
+            landcolor="#dfe1e5",      
+            lakecolor="#eaf1f8",
+            showland=True,
+            showlakes=True,
+            showsubunits=True,
+            subunitcolor="#ffffff",  
+            subunitwidth=1.0,
+            showcoastlines=True,
+            coastlinecolor="#9aa0a6",
+            showframe=False,
         ),
         paper_bgcolor="rgba(0,0,0,0)",
         height=520,
         margin=dict(l=0, r=0, t=10, b=0),
-        legend=dict(orientation="h", yanchor="bottom", y=0.02, x=0.02),
+        legend=dict(
+            orientation="h", yanchor="bottom", y=0.02, x=0.02,
+            bgcolor="rgba(255,255,255,0.75)", font=dict(color="#333333"),
+        ),
     )
     st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
     st.caption(
