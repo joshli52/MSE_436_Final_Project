@@ -25,9 +25,29 @@ python3 src/build.py
 # 2. Train models
 python3 src/model.py
 
-# 3. Run the optimizer
+# 3. Run the optimizer (CLI)
 python3 src/cli.py --sources '[{"city":"Chicago, IL","attendees":30},{"city":"Dallas/Fort Worth, TX","attendees":50}]'
+
+# 4. Launch the interactive UI
+streamlit run src/app.py
 ```
+
+## User interface
+
+`src/app.py` is a Streamlit decision-support UI over the same optimizer:
+
+- **Attendee origins** — searchable add-a-city picker plus a per-city list
+  with headcount steppers and one-click remove; every change re-runs the
+  optimizer.
+- **Candidate hosts** — optionally restrict which cities may host.
+- **Exclude origin cities from hosting** (toggle, on by default) — origin
+  cities pay $0 airfare for their own attendees, so without exclusion the
+  optimizer nearly always recommends one of them. The toggle removes them
+  from candidacy to force a neutral host recommendation.
+- **Outputs** — recommended host with total cost / cost-per-attendee /
+  savings vs. runner-up, a cost-comparison bar chart, a U.S. map of origins
+  vs. candidate hosts, the full ranking with predicted-fare-share
+  uncertainty, and a per-origin fare breakdown for any candidate.
 All output files land in the project root:
 - `pairs_2025q4.parquet` — 1,000-pair feature table
 - `city_coords.parquet` — 115-city geocode + aggregate table
