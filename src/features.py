@@ -165,9 +165,6 @@ class LOOCityAggregator:
         df = pd.concat([df, agg_a, agg_b], axis=1)
 
         # Symmetric pair features
-        def _sym(col: str, suffix: str) -> tuple[str, str]:
-            return f"{suffix}_mean", f"{suffix}_absdiff"
-
         feature_map = {
             "degree": "deg",
             "fare_residual": "farelevel",

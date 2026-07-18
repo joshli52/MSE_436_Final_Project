@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import time
 from pathlib import Path
 
@@ -131,7 +132,6 @@ def _extract_lon_lat(col: pd.Series) -> tuple[pd.Series, pd.Series]:
                 lat_vals.append(None)
         elif isinstance(val, str):
             # "POINT (lon lat)"
-            import re
             m = re.match(r"POINT\s*\(([^\s]+)\s+([^\s]+)\)", val.strip())
             if m:
                 lon_vals.append(float(m.group(1)))
